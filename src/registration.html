@@ -13,14 +13,14 @@
                 <a href=""><img src="img/logo.svg" alt="logo"></a>
             </div>
             <div class="header__navbar">
-                <a href=""><button class="header__navbar__about_us">О нас</button></a>
-                <a href=""><button class="header__navbar_blog">Блог</button></a>
+                <a href=""><button class="header__navbar__about-us">О нас</button></a>
+                <a href=""><button class="header__navbar__blog">Блог</button></a>
             </div>
         </div>
     </header>
     <main>
         <section class="main">
-            <div class="main__title"><h1>Мессенджер <p class="red-text">Я</p><p class="bold-text">бросаю</p></h1></div>
+            <div class="main__title"><h1>Мессенджер <p class="text_red">Я</p><p class="text_bold">бросаю</p></h1></div>
             <div class="main__container">
                 <div class="main__container__body">
                     <div class="main__container__description">
@@ -28,44 +28,58 @@
                     </div>
                         <img src="img/login_picture.svg" alt="">
                 </div>
-                <div class="registration__card">
-                    <div class="registration__card__container">
+                <div class="card">
+                    <div class="card__registration">
                         <p>Зарегистрироваться</p>
-                        <form class="registration__card__form" action=".">
+                        <form class="card__form" action="." method="post">
 
                             <label for="phone_number">Номер телефона</label>
-                            <input type="tel" id="phone_number" name="phone_number">
+                            <input type="tel" id="reg_phone_number" name="phone_number" value="">
 
                             <label for="password">Пароль</label>
-                            <input type="password" id="password" name="password">
+                            <input type="password" id="reg_password" name="password" value="">
 
                             <label for="repeat_password">Повторите пароль</label>
-                            <input type="password" id="repeat_password" name="repeat_password">
+                            <input type="password" id="reg_repeat_password" name="repeat_password" value="">
 
-                            <button class="registration__card__button" onclick="">Зарегистрироваться</button>
+                            <button class="card__button" onclick="">Зарегистрироваться</button>
                         </form>
                     </div>
-                    <div class="registration__card__footer">
-                        <div class="registration__card__footer__auth">
-                            <a href="">Уже есть аккаунт? Войдите!</a>
+                    <div class="card__authorization">
+                        <p>Войти</p>
+                        <form class="card__form" action="." method="post">
+
+                            <label for="phone_number">Номер телефона</label>
+                            <input type="tel" id="phone_number" name="phone_number" value="">
+
+                            <label for="password">Пароль</label>
+                            <input type="password" id="password" name="password" value="">
+                            <a href="" class="text_link card__form__link_password"><span>Забыли пароль?</span></a>
+
+                            <button class="card__button" onclick="">Войти</button>
+                        </form>
+                    </div>
+                    <div class="card__footer">
+                        <div class="card__footer__auth">
+                            <button class="card__footer__auth__switch-button">Уже есть аккаунт? Войдите!</button>
                         </div>
-                        <div class="registration__card__footer__devider">
-                            <div class="registration__card__footer__bar"></div>
-                            <p class="registration__card__footer__subtitle">или</p>
-                            <div class="registration__card__footer__bar"></div>
+                        <div class="card__footer__devider">
+                            <div class="card__footer__bar"></div>
+                            <p class="card__footer__subtitle">или</p>
+                            <div class="card__footer__bar"></div>
                         </div>
 
-                        <div class="registration__card__footer__bottom_box">
+                        <div class="card__footer__bottom">
                             <div>
-                                <p class="registration__card__footer__bottom_box_title">Войти через:</p>
+                                <p class="card__footer__bottom_title">Войти через:</p>
                             </div>
-                            <div class="registration__card__footer__bottom_box_icons">
-                                <a href=""><img class="registration__card__footer__bottom_box_vk-icon" src="icons/vk.svg" alt="vk"></a>
-                                <a href=""><img class="registration__card__footer__bottom_box_whatsApp-icon" src="icons/whatsApp.svg" alt="whatsApp"></a>
-                                <a href=""><img class="registration__card__footer__bottom_box_telegram-icon" src="icons/telegram.svg" alt="telegram"></a>
+                            <div class="card__footer__bottom_icons">
+                                <a href=""><img class="card__footer__bottom_vk-icon" src="icons/vk.svg" alt="vk"></a>
+                                <a href=""><img class="card__footer__bottom_whatsApp-icon" src="icons/whatsApp.svg" alt="whatsApp"></a>
+                                <a href=""><img class="card__footer__bottom_telegram-icon" src="icons/telegram.svg" alt="telegram"></a>
                             </div>
                             <div>
-                                <p class="registration__card__footer__bottom_box_text">Нажимая <i>Зарегистрироваться</i> вы соглашаетесь с <span class="link"><a href="">условиями пользования</a></span> <span class="red-text">Я</span> бросаю</p>
+                                <p class="card__footer__bottom_text">Нажимая <i>Зарегистрироваться</i> вы соглашаетесь с <a href="" class="text_link"><span>условиями пользования</span></a> <span class="text_red">Я</span> <span class="text_bold">бросаю</span></p>
                             </div>
                         </div>
                     </div>
@@ -75,35 +89,9 @@
     </main>
     <footer>
         <div class="footer">
-            <p class="footer-text">©2023. Я бросаю. Все права защищены</p>
+            <p class="footer__text">©2023. Я бросаю. Все права защищены</p>
         </div>
     </footer>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script src="js/script1.js"></script>
 </body>
 
