@@ -5,10 +5,12 @@ from django.contrib.auth.models import AbstractUser
 class BadHabits(models.Model):
     title = models.CharField(max_length=50, verbose_name="Привычка")
 
-
     class Meta:
         verbose_name = "Вредная привычка"
         verbose_name_plural = "Вредные привычки"
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class User(AbstractUser):
@@ -23,7 +25,6 @@ class User(AbstractUser):
     about_me = models.TextField(null=True, blank=True, verbose_name="Обо мне")
     photo = models.FileField(null=True, blank=True, verbose_name="Фото")
     bad_habits = models.ManyToManyField(BadHabits, verbose_name="Плохие привычки")
-
 
     class Meta:
         verbose_name = "Пользователь"
