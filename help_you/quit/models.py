@@ -24,7 +24,7 @@ class User(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
     about_me = models.TextField(null=True, blank=True, verbose_name="Обо мне")
     photo = models.FileField(null=True, blank=True, verbose_name="Фото")
-    bad_habits = models.ManyToManyField(BadHabits, verbose_name="Плохие привычки")
+    bad_habits = models.ManyToManyField(BadHabits, blank=True, verbose_name="Плохие привычки")
 
     class Meta:
         verbose_name = "Пользователь"
