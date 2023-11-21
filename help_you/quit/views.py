@@ -1,7 +1,6 @@
 # import jwt
 
 # from django.conf import settings
-from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -19,10 +18,6 @@ USER = get_user_model()
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = USER.objects.all()
-
-
-def registration(request):
-    return render(request, 'registration.html')
 
 
 class LoginUserView(APIView):
