@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Я бросаю</title>
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div class="header__logo">
+                <a href="#"><img src="img/logo.svg" alt="logo"></a>
+            </div>
+            <div class="header__navbar">
+                <a href="#"><button class="header__navbar__about-us">Чаты</button></a>
+                <a href="#"><button class="header__navbar__about-us">О нас</button></a>
+                <a href="#"><button class="header__navbar__blog">Блог</button></a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="main">
+            <form class="main__form" action="." method="post" enctype="multipart/form-data" >
+                <div class="main__form__user-info">
+                    <p class="main__form__user-info__title">Мои данные</p>
+
+                    <div class="main__form__user-info__card">
+                        <div class="main__form__user-info__card__name">
+                            <label for="name">Имя Фамилия</label>
+                            <input class="card__input" type="text" id="name" name="name">
+                        </div>
+    
+                        <div class="main__form__user-info__card__gender">
+                            <label class="main__form__user-info__card__gender_male"><input type="radio" name="gender" id="gender">Мужчина</label>
+                            <label class="main__form__user-info__card__gender_female"><input type="radio" name="gender" id="gender">Женщина</label>
+                        </div>
+    
+                        <div class="main__form__user-info__card__date-of-birth">
+                            <label for="date_of_birth">Дата рождения</label>
+                            <input class="card__input__date" type="date" name="date_of_birth" id="date_of_birth">
+                        </div>
+                        
+    
+                        <div class="main__form__user-info__card__description">
+                            <label for="about_me">Немного обо мне</label>
+                            <textarea class="card__input" name="about_me" id="about_me" cols="30" rows="10"></textarea>
+                        </div>
+    
+                        <p class="main__form__user-info__card__text">Если вы хотите общаться анонимно, заполните только поле ”Вредные привычки”.<br>
+                        Если вашей зависимости нет в списке, впишите её в поле “Немного обо мне”.</p>
+                    </div>
+                    
+                    <button class="main__form__user-info__card__button" onclick="">Сохранить</button>
+                </div>
+                <div class="main__form__user-habits">
+                    <p class="main__form__user-habits__title">Моя фотография</p>
+
+                    <div class="main__form__user-habits__avatar">
+                        <input class="main__form__user-habits__avatar_input" name="photo" id="photo" type="file">
+                        <img class="main__form__user-habits__avatar-field" src="../src/img/avatar_default.svg" alt="logo">
+                        <button type="button" inputmode="img" class="main__form__user-habits__button"><label class="main__form__user-habits__avatar_label" for="photo">Редактировать</label></button>
+                    </div>
+
+                    <div class="main__form__user-habits__box">
+                        <p class="main__form__user-habits__habits_title">Вредные привычки</p>
+                        <div class="main__form__user-habits__box__habits">
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <div class="footer">
+            <p class="footer__text">©2023. Я бросаю. Все права защищены</p>
+        </div>
+    </footer>
+    <script src="js/script2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr(".main__form__user-info__card__date-of-birth input");
+    </script>
+</body>
+
+</html>
