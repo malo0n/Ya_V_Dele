@@ -6,9 +6,9 @@ from .views import *
 
 app_name = 'registration'
 router = DefaultRouter()
-router.register('user', UserViewSet, basename='user-viewset')
+router.register('register', UserViewSet, basename='user-viewset')
 
 urlpatterns = [
-    path('login/', LoginUserView.as_view(), name='login')
+    path('api/login/', LoginUserView.as_view(), name='login')
 ]
 urlpatterns += [path(r'api/', include(router.urls))]

@@ -29,3 +29,18 @@ class User(AbstractUser):
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+
+
+class Chat(models.Model):
+    interlocutors = models.ManyToManyField(User, verbose_name="Собеседники")
+
+    class Meta:
+        verbose_name = "Чат"
+        verbose_name_plural = "Чаты"
+
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, verbose_name="Чат")
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Отправитель")
+    content = models.TextField(verbose_name="Сообщение")
+    departure_time = models.DateTimeField(auto_now_add=True, verbose_name="Время отправления")
