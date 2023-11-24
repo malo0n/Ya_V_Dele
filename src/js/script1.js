@@ -15,3 +15,50 @@ switchButton.addEventListener('click', () =>{
         switchButton.innerHTML = "Уже есть аккаунт? Войдите!";
     }
 });
+
+
+function registerUser() {
+    const formData = new FormData(document.getElementById('registrationForm'));
+    if (formData.get('repeat_password') === formData.get('password')) {
+        formData.delete('repeat_password');
+        fetch('http://127.0.0.1:8000/api/register/', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            document.getElementById('registrationForm').reset();
+        })
+        .catch(error => {
+            if (response.status === 400) {
+                for (const field in data.errors) {
+                    const errorField = document.getElementById(`${field}Error`);
+                    errorField.textContent = data.errors[field];
+                }
+            }
+        });
+    } else {
+        console.log("Пароли не совпадают");
+    };
+}
+
+function loginUser() {
+    const formData = new FormData(document.getElementById('loginForm'));
+    fetch('http://127.0.0.1:8000api/login/'), {
+        method: 'POST',
+        body: formData
+    }
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('registrationForm').reset();
+    })
+    .catch(error => {
+        if (response.status === 400) {
+            for (const field in data.errors) {
+                const errorField = document.getElementById(`${field}Error`);
+                errorField.textContent = data.errors[field];
+            }
+        }
+    });
+}
