@@ -195,8 +195,13 @@ header {
   font-size: 18px;
 }
 
+.main__form__user-info__card__gender input:checked + label::before {
+  background-image: url("../icons/radio-active.svg");
+}
+
 .main__form__user-info__card__gender input {
   display: none;
+  z-index: -1;
 }
 
 .main__form__user-info__card__gender .main__form__user-info__card__gender_male {
@@ -206,9 +211,9 @@ header {
 
 .main__form__user-info__card__gender .main__form__user-info__card__gender_male::before {
   content: "";
-  height: 16px;
-  width: 16px;
-  background-image: url(../icons/radio-inactive.svg);
+  height: 17px;
+  width: 17px;
+  background-image: url("../icons/radio-inactive.svg");
   background-position: 50%;
   background-repeat: no-repeat;
   display: inline-block;
@@ -227,9 +232,9 @@ header {
 
 .main__form__user-info__card__gender .main__form__user-info__card__gender_female::before {
   content: "";
-  height: 16px;
-  width: 16px;
-  background-image: url(../icons/radio-inactive.svg);
+  height: 17px;
+  width: 17px;
+  background-image: url("../icons/radio-inactive.svg");
   background-position: 50%;
   background-repeat: no-repeat;
   display: inline-block;

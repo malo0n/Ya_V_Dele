@@ -186,15 +186,19 @@ header{
     label{
         font-size: 18px;
     }
+    input:checked+label::before{
+        background-image: url("../icons/radio-active.svg");
+    }
     input{
         display: none;
+        z-index: -1;
     }
     @mixin radio-icon{
         &::before{
             content: "";
-            height: 16px;
-            width: 16px;
-            background-image: url(../icons/radio-inactive.svg);
+            height: 17px;
+            width: 17px;
+            background-image: url("../icons/radio-inactive.svg");
             background-position: 50%;
             background-repeat: no-repeat;
             display: inline-block;
@@ -215,6 +219,7 @@ header{
         margin-left: 10px;
         @include radio-icon;
     }
+
 }
 
 

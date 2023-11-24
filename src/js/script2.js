@@ -1,9 +1,11 @@
 
+let userAvatar = document.querySelector('.main__form__user-habits__avatar-field');
+let inputAvatar = document.querySelector('.main__form__user-habits__avatar_input');
+inputAvatar.addEventListener('change', () =>{
+    userAvatar.src = URL.createObjectURL(inputAvatar.files[0]);
+
+})
 const habitBox = document.querySelector('.main__form__user-habits__box__habits');
-let HABITS = `{             
-    "smoking" : "Ваня",
-    "drugs": "Не кури"
-}`;
 let habits = JSON.parse(HABITS);
 function addHabits(){
     for(let key in habits){
@@ -15,20 +17,15 @@ function addHabits(){
     }
 }
 
-
-
-
-
-
-
-
-
 function getHabits() {
     fetch('http://127.0.0.1:8000/api/habits', {
     })
     .then((response) => response.json())
     .then((data) => {
         console.log(data)
+    })
+    .then(() => {
+        
     })
     
 }
