@@ -101,6 +101,7 @@ h1 {
 .main__container {
   display: flex;
   align-items: center;
+  height: 700px;
 }
 
 .main__container__body {
