@@ -9,6 +9,7 @@ router = DefaultRouter()
 router.register('register', UserViewSet, basename='user-viewset')
 
 urlpatterns = [
-    path('api/login/', LoginUserView.as_view(), name='login')
+    path('api/login/', LoginUserView.as_view()),
+    path('api/habits/', BadHabitsListView.as_view()),
 ]
 urlpatterns += [path(r'api/', include(router.urls))]

@@ -3,6 +3,8 @@ from datetime import datetime
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
+from .models import BadHabits
+
 
 USER = get_user_model()
 
@@ -29,3 +31,9 @@ class LoginUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
         fields = ('username', 'password')
+
+
+class BadHabitsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BadHabits
+        fields = ('title', )
