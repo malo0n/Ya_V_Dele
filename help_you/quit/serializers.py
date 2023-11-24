@@ -37,3 +37,11 @@ class BadHabitsSerializer(serializers.ModelSerializer):
     class Meta:
         model = BadHabits
         fields = ('title', )
+
+
+class ChangeUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = USER
+        exclude = ('id', 'is_superuser', 'first_name', 'last_name', 
+                  'email', 'is_staff', 'is_active', 'last_login',
+                   'date_joined', 'password')

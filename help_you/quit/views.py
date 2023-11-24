@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model, authenticate, login
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 # from rest_framework.decorators import api_view, permission_classes
 # from rest_framework.authentication import AllowAny
@@ -13,6 +13,7 @@ from rest_framework import status
 
 from .serializers import *
 from .models import BadHabits
+from .permisions import IsOwner
 
 
 USER = get_user_model()
@@ -33,7 +34,7 @@ class LoginUserView(APIView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return Response(status=status.HTTP_200_OK)
+            return Response(user.id, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
         
@@ -42,6 +43,20 @@ class BadHabitsListView(ListAPIView):
     queryset = BadHabits.objects.all()
     serializer_class = BadHabitsSerializer
     permission_classes = (IsAuthenticated, )
+
+
+class ChangeUserView(RetrieveUpdateAPIView):
+    queryset = USER.objects.all()
+    serializer_class = ChangeUserSerializer
+    permission_classes = (IsAuthenticated, IsOwner)
+
+
+# class ChangeUserViewSet(ModelViewSet):
+#     serializer_class = ChangeUserSerializer
+#     permission_classes = (IsAuthenticated, )
+
+#     def get_queryset(self):
+#         return USER.objects.filter(id=self.request.user.id)
         
 
 
