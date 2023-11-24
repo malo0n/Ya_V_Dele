@@ -39,7 +39,7 @@
   text-decoration: none;
   color: var(--black);
 }
-.text_link :hover {
+.text_link:hover {
   cursor: pointer;
   text-decoration: underline;
 }
@@ -98,11 +98,17 @@ h1 {
   margin-bottom: 57px;
 }
 
+.main__container {
+  display: flex;
+  align-items: center;
+}
+
 .main__container__body {
   display: flex;
   gap: 111px;
   flex-direction: column;
   width: 55%;
+  margin-right: 15px;
 }
 
 .main__container__description {
@@ -111,22 +117,28 @@ h1 {
   line-height: 34px;
 }
 
-.main__container {
-  display: flex;
-  justify-content: space-between;
-}
-
 .card {
   border: 2px solid var(--black);
   border-radius: 50px;
   padding: 30px 50px;
+  margin-left: 15px;
 }
 
-.card__authorization, .card__registration {
+.card__registration {
   display: flex;
   flex-direction: column;
 }
-.card__authorization p, .card__registration p {
+.card__registration p {
+  font-size: 36px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.card__authorization {
+  display: flex;
+  flex-direction: column;
+}
+.card__authorization p {
   font-size: 36px;
   font-weight: 500;
   text-align: center;
@@ -167,7 +179,7 @@ h1 {
   transition: 0.3s;
   border: 1px solid var(--pink);
 }
-.card__button :hover {
+.card__button:hover {
   background-color: var(--white);
   color: var(--pink);
   border: 1px solid var(--pink);
@@ -201,7 +213,7 @@ h1 {
   background-color: var(--white);
   color: var(--blue);
 }
-.card__footer__auth__switch-button :hover {
+.card__footer__auth__switch-button:hover {
   cursor: pointer;
 }
 
