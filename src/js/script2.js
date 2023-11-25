@@ -7,8 +7,8 @@ inputAvatar.addEventListener('change', () =>{
 })
 const habitBox = document.querySelector('.main__form__user-habits__box__habits');
 let habits = JSON.parse(HABITS);
-function addHabits(){
-    for(let key in habits){
+function addHabits(data){
+    for(let key in data){
         let newHabit = document.createElement("label");
         newHabit.classList = "habit__container";
         newHabit.innerHTML = `<input type="checkbox" 
@@ -22,10 +22,10 @@ function getHabits() {
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log(data)
+        let habits = JSON.parse(data);
+        addHabits(habits);
     })
-    .then(() => {
-        
+    .catch(error => {
+        console.error('Error:', error);
     })
-    
 }

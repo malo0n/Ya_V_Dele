@@ -9,7 +9,7 @@
 //     }
 // }
 
-fetch('http://127.0.0.1:8000/api/habits', {
+fetch('http://127.0.0.1:8000/api/habits/', {
 })
 .then((response) => response.json())
 .then((data) => {
