@@ -17,7 +17,7 @@ function addHabits(data){
         let newHabit = document.createElement("label");
         newHabit.classList = "habit__container";
         newHabit.innerHTML = `<input type="checkbox" 
-        class="habit__container__input" name="" id="" value="${habits[key]}">${habits[key]}`;
+        class="habit__container__input" name="" id="${data[key].id}" value="${data[key].title}">${data[key].title}`;
         habitBox.append(newHabit);
     }
 }
@@ -27,8 +27,7 @@ function getHabits() {
     })
     .then((response) => response.json())
     .then((data) => {
-        let habits = JSON.parse(data);
-        addHabits(habits);
+        addHabits(data);
     })
     .catch(error => {
         console.error('Error:', error);
@@ -37,12 +36,13 @@ function getHabits() {
 window.onload = getHabits();
 
 //фетч на данные профиля
-
-function profileUser() {
+let id = window.localStorage.getItem('id');
+function profileUserPost() {
     const formData = new FormData(document.getElementById('profileForm'));
-    fetch('http://127.0.0.1:8000/api/profile/'), {
-        method: 'POST',
-        body: formData
+    fetch(`http://127.0.0.1:8000/api/profile/${id}`), {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'multipart/form-data' },
+        body: formData,
     }
     .then(response => response.json())
     .then(() => {
@@ -58,3 +58,46 @@ function profileUser() {
         console.log('Error: ', error);
     });
 }
+let userName = document.querySelector('.main__form__user-info__card__name input');
+let userGender = document.querySelectorAll('.main__form__user-info__card__gender input');
+let userDateOfBirth = document.querySelector('.card__input__date');
+let userDescription = document.querySelector('.main__form__user-info__card__description textarea');
+
+function genderUpdate(userGender, data){
+    if (data.gender == 'M') userGender[0].checked = true;
+    else userGender[1].checked = true;
+}
+function habitsUpdate(data){
+    for (let key in data.bad_habits){
+        document.getElementById(`${key}`).checked = true;
+    }
+}
+function profileUpdate(data){
+        userName.value = data.name; 
+        genderUpdate(userGender, data);
+        userDateOfBirth.value = data.date_of_birth;
+        userDescription.value = data.about_me;
+        userAvatar.src = data.photo;
+        habitsUpdate(data);
+}
+
+
+
+function profileUserGet (){
+    fetch(`http://127.0.0.1:8000/api/profile/${id}`), {
+    }
+    .then(response => response.json())
+    .then((data) => {
+        profileUpdate(data);
+    })
+    .catch(error => {
+        if (response.status === 400) {
+            for (const field in data.errors) {
+                const errorField = document.getElementById(`${field}Error`);
+                errorField.textContent = data.errors[field];
+            }
+        }
+        console.log('Error: ', error);
+    });
+}
+window.onload = profileUserGet();

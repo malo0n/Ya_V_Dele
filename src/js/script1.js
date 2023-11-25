@@ -30,6 +30,7 @@ function registerUser() {
         .then(data => {
             console.log(data);
             document.getElementById('registrationForm').reset();
+            document.location.href = 'profile.html';
         })
         .catch(error => {
             if (response.status === 400) {
@@ -51,8 +52,9 @@ function loginUser() {
         body: formData
     }
     .then(response => response.json())
-    .then(data => {
+    .then(() => {
         document.getElementById('registrationForm').reset();
+        document.location.href = 'profile.html';
     })
     .catch(error => {
         if (response.status === 400) {
@@ -63,3 +65,8 @@ function loginUser() {
         }
     });
 }
+let id = fetch('http://127.0.0.1:8000/api/login/', {
+        method: 'POST',
+        body: formData,
+    });
+window.localStorage.setItem('id', id);
