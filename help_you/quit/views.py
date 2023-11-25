@@ -42,13 +42,13 @@ class LoginUserView(APIView):
 class BadHabitsListView(ListAPIView):
     queryset = BadHabits.objects.all()
     serializer_class = BadHabitsSerializer
-    permission_classes = (IsAuthenticated, )
+    # permission_classes = (IsAuthenticated, )
 
 
 class ChangeUserView(RetrieveUpdateAPIView):
     queryset = USER.objects.all()
     serializer_class = ChangeUserSerializer
-    permission_classes = (IsAuthenticated, IsOwner)
+    # permission_classes = (IsAuthenticated, IsOwner)
 
 
 # class ChangeUserViewSet(ModelViewSet):
