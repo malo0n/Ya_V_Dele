@@ -22,7 +22,7 @@
     </header>
     <main>
         <section class="main">
-            <form class="main__form" enctype="multipart/form-data" >
+            <form class="main__form" enctype="multipart/form-data" id="profileForm" name="profileForm">
                 <div class="main__form__user-info">
                     <p class="main__form__user-info__title">Мои данные</p>
 
@@ -54,7 +54,7 @@
                         Если вашей зависимости нет в списке, впишите её в поле “Немного обо мне”.</p>
                     </div>
                     
-                    <button class="main__form__user-info__card__button" onclick="">Сохранить</button>
+                    <button class="main__form__user-info__card__button" onclick="profileUser()">Сохранить</button>
                 </div>
                 <div class="main__form__user-habits">
                     <p class="main__form__user-habits__title">Моя фотография</p>
@@ -74,7 +74,6 @@
                     
                 </div>
             </form>
-            <button class="" onclick="addHabits()">Сохранить</button>
         </section>
     </main>
     <footer>

@@ -46,7 +46,7 @@ function registerUser() {
 
 function loginUser() {
     const formData = new FormData(document.getElementById('loginForm'));
-    fetch('http://127.0.0.1:8000api/login/'), {
+    fetch('http://127.0.0.1:8000/api/login/'), {
         method: 'POST',
         body: formData
     }

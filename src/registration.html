@@ -31,7 +31,7 @@
                 <div class="card">
                     <div class="card__registration">
                         <p>Зарегистрироваться</p>
-                        <form class="card__form" action="." method="post">
+                        <form class="card__form" id="registrationForm" name="registrationForm">
 
                             <label for="phone_number">Номер телефона</label>
                             <input type="tel" id="reg_phone_number" name="username" value="">
@@ -42,21 +42,21 @@
                             <label for="repeat_password">Повторите пароль</label>
                             <input type="password" id="reg_repeat_password" name="repeat_password" value="">
 
-                            <button class="card__button" onclick="">Зарегистрироваться</button>
+                            <button class="card__button" onclick="registerUser()">Зарегистрироваться</button>
                         </form>
                     </div>
                     <div class="card__authorization">
                         <p>Войти</p>
-                        <form class="card__form" action="." method="post">
+                        <form class="card__form" action="profile.html" id="loginForm" name="loginForm">
 
                             <label for="phone_number">Номер телефона</label>
-                            <input type="tel" id="phone_number" name="phone_number" value="">
+                            <input type="tel" id="phone_number" name="username" value="">
 
                             <label for="password">Пароль</label>
                             <input type="password" id="password" name="password" value="">
                             <a href="#" class="text_link card__form__link_password"><span>Забыли пароль?</span></a>
 
-                            <button class="card__button" onclick="">Войти</button>
+                            <button class="card__button" onclick="loginUser()">Войти</button>
                         </form>
                     </div>
                     <div class="card__footer">
