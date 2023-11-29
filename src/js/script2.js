@@ -1,3 +1,6 @@
+let token = window.localStorage.getItem('token');
+window.onload = getHabits();
+window.onload = profileUserGet();
 
 //загрузка аватара
 
@@ -5,7 +8,6 @@ let userAvatar = document.querySelector('.main__form__user-habits__avatar-field'
 let inputAvatar = document.querySelector('.main__form__user-habits__avatar_input');
 inputAvatar.addEventListener('change', () =>{
     userAvatar.src = URL.createObjectURL(inputAvatar.files[0]);
-
 })
 
 
@@ -17,14 +19,17 @@ function addHabits(data){
         let newHabit = document.createElement("label");
         newHabit.classList = "habit__container";
         newHabit.innerHTML = `<input type="checkbox" 
-        class="habit__container__input" name="" id="${data[key].id}" value="${data[key].title}">${data[key].title}`;
+        class="habit__container__input" name="bad_habits" id="${data[key].id}" value="${data[key].title}">${data[key].title}`;
         habitBox.append(newHabit);
     }
 }
 
+
 function getHabits() {
-    fetch('http://127.0.0.1:8000/api/habits', {
-        headers: {'Authorization': 'Token ' + window.localStorage.getItem('token') },
+    fetch('http://127.0.0.1:8000/api/habits/', {
+        headers: {
+        'Authorization': 'Token ' + token,
+        }
     })
     .then((response) => response.json())
     .then((data) => {
@@ -34,18 +39,19 @@ function getHabits() {
         console.error('Error:', error);
     })
 }
-window.onload = getHabits();
+
 
 //фетч на данные профиля
-let token = window.localStorage.getItem('token');
-console.log(token);
+const formData = new FormData(document.getElementById('profileForm'));
+console.log(token);     
 function profileUserPost() {
-    const formData = new FormData(document.getElementById('profileForm'));
-    fetch(`http://127.0.0.1:8000/api/profile`), {
+    fetch('http://127.0.0.1:8000/api/profile/', {
         method: 'PATCH',
-        headers: {'Authorization': 'Token ' + token },
+        headers: { 
+            'Authorization': 'Token ' + token,
+        },
         body: formData,
-    }
+    })
     .then(response => response.json())
     .then(() => {
         document.getElementById('profileForm').reset();
@@ -67,7 +73,7 @@ let userDescription = document.querySelector('.main__form__user-info__card__desc
 
 function genderUpdate(userGender, data){
     if (data.gender == 'M') userGender[0].checked = true;
-    else userGender[1].checked = true;
+    else if (data.gender == 'W') userGender[1].checked = true;
 }
 function habitsUpdate(data){
     for (let key in data.bad_habits){
@@ -75,24 +81,28 @@ function habitsUpdate(data){
     }
 }
 function profileUpdate(data){
-        userName.value = data.name; 
-        genderUpdate(userGender, data);
-        userDateOfBirth.value = data.date_of_birth;
-        userDescription.value = data.about_me;
+    userName.value = data.name; 
+    genderUpdate(userGender, data);
+    userDateOfBirth.value = data.date_of_birth;
+    userDescription.value = data.about_me;
+    if (data.photo != null) {
         userAvatar.src = data.photo;
-        habitsUpdate(data);
+    }
+    habitsUpdate(data);
 }
 
-function profileUserGet (){
-    fetch(`http://127.0.0.1:8000/api/profile`), {
-        headers: {'Authorization': 'Token ' + window.localStorage.getItem('token') },
-    }
+function profileUserGet() {
+    fetch('http://127.0.0.1:8000/api/profile/', {
+        headers: { 
+            'Authorization': 'Token ' + token,
+        }
+    })
     .then(response => response.json())
     .then((data) => {
         profileUpdate(data);
     })
     .catch(error => {
-        if (response.status === 400) {
+        if (error.status == 400) {
             for (const field in data.errors) {
                 const errorField = document.getElementById(`${field}Error`);
                 errorField.textContent = data.errors[field];
@@ -101,4 +111,7 @@ function profileUserGet (){
         console.log('Error: ', error);
     });
 }
-window.onload = profileUserGet();
+
+for (let [key, value] of formData) {
+    console.log(`${key} - ${value}`)
+}

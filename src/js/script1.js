@@ -47,16 +47,16 @@ function registerUser() {
 
 function loginUser() {
     const formData = new FormData(document.getElementById('loginForm'));
-    let token = fetch('http://127.0.0.1:8000/api/login/', {
+    fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
-        body: formData,
+        body: formData
     })
     .then(response => response.json())
-    .then(() => {
-        document.getElementById('registrationForm').reset();
+    .then(data => {
+        const token = data.token;
         window.localStorage.setItem('token', token);
-        console.log(window.localStorage.getItem('token'));
-        document.location.href = 'profile.html';
+        document.getElementById('registrationForm').reset();
+        window.location.href = 'profile.html';
     })
     .catch(error => {
         if (response.status === 400) {
