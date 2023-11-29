@@ -1,0 +1,116 @@
+* {
+  border: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  font-family: istok_web;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  /* letter-spacing: 0.8px; */
+  outline: 0;
+  outline-offset: 0;
+}
+
+@font-face {
+  font-family: istok_web;
+  src: url(../fonts/IstokWeb-Regular.ttf);
+}
+:root {
+  --black: #000;
+  --pink: #ff1491;
+  --blue: #3B5AF1;
+  --white: #ffffff;
+  --grey: #a19d9d;
+  --input_bcg: #F4F3EE66;
+  --habits-hover: #ec6bb0;
+  --scrollbar: #9321964D;
+  --border: #ff149199;
+}
+
+.text_title {
+  font-weight: 700;
+  color: var(--pink);
+}
+
+.text_bold {
+  font-weight: 700;
+  font: bold;
+}
+
+.text_link {
+  text-decoration: none;
+  color: var(--black);
+}
+.text_link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.text_pink {
+  color: var(--pink);
+}
+
+.text_blue {
+  color: var(--blue);
+}
+
+header {
+  margin: 30px 175px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-style: solid;
+  border-bottom-color: var(--black);
+  border-bottom-width: 1px;
+}
+
+.header__navbar {
+  display: flex;
+  align-items: start;
+  gap: 40px;
+}
+.header__navbar button {
+  font-weight: 400;
+  font-size: 20px;
+  background-color: var(--white);
+  transition: all 0.3s ease 0s;
+  padding: 25px 0px;
+}
+.header__navbar button:hover {
+  cursor: pointer;
+  transform: translateY(-7px);
+}
+
+.main {
+  height: 100vh;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 30px 60px;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+}
+.main .main__chats {
+  height: 100%;
+  width: 30%;
+  margin: 0px 0px;
+  border-right: 1px solid var(--border);
+}
+.main .main__dialog {
+  height: 100%;
+  width: 70%;
+}
+
+.footer {
+  margin-top: 50px;
+  border-top: 1px solid var(--black);
+}
+
+.footer__text {
+  margin: 35px 175px;
+  font-size: 20px;
+}/*# sourceMappingURL=style3.css.map */
