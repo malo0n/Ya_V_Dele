@@ -47,13 +47,15 @@ function registerUser() {
 
 function loginUser() {
     const formData = new FormData(document.getElementById('loginForm'));
-    fetch('http://127.0.0.1:8000/api/login/'), {
+    let token = fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
-        body: formData
-    }
+        body: formData,
+    })
     .then(response => response.json())
     .then(() => {
         document.getElementById('registrationForm').reset();
+        window.localStorage.setItem('token', token);
+        console.log(window.localStorage.getItem('token'));
         document.location.href = 'profile.html';
     })
     .catch(error => {
@@ -65,8 +67,4 @@ function loginUser() {
         }
     });
 }
-let id = fetch('http://127.0.0.1:8000/api/login/', {
-        method: 'POST',
-        body: formData,
-    });
-window.localStorage.setItem('id', id);
+

@@ -24,6 +24,7 @@ function addHabits(data){
 
 function getHabits() {
     fetch('http://127.0.0.1:8000/api/habits', {
+        headers: {'Authorization': 'Token ' + window.localStorage.getItem('token') },
     })
     .then((response) => response.json())
     .then((data) => {
@@ -36,12 +37,13 @@ function getHabits() {
 window.onload = getHabits();
 
 //фетч на данные профиля
-let id = window.localStorage.getItem('id');
+let token = window.localStorage.getItem('token');
+console.log(token);
 function profileUserPost() {
     const formData = new FormData(document.getElementById('profileForm'));
-    fetch(`http://127.0.0.1:8000/api/profile/${id}`), {
+    fetch(`http://127.0.0.1:8000/api/profile`), {
         method: 'PATCH',
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {'Authorization': 'Token ' + token },
         body: formData,
     }
     .then(response => response.json())
@@ -82,7 +84,8 @@ function profileUpdate(data){
 }
 
 function profileUserGet (){
-    fetch(`http://127.0.0.1:8000/api/profile/${id}`), {
+    fetch(`http://127.0.0.1:8000/api/profile`), {
+        headers: {'Authorization': 'Token ' + window.localStorage.getItem('token') },
     }
     .then(response => response.json())
     .then((data) => {
