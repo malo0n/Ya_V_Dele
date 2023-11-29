@@ -8,7 +8,6 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 # from rest_framework.decorators import api_view, permission_classes
-# from rest_framework.authentication import AllowAny
 from rest_framework import status
 
 from .serializers import *
@@ -23,32 +22,20 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = USER.objects.all()
     permission_classes = (AllowAny, )
-
-
-class LoginUserView(APIView):
-    serializer_class = LoginUserSerializer
-
-    def post(self, request):
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return Response(user.id, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
         
 
 class BadHabitsListView(ListAPIView):
     queryset = BadHabits.objects.all()
     serializer_class = BadHabitsSerializer
-    # permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
 
 
 class ChangeUserView(RetrieveUpdateAPIView):
-    queryset = USER.objects.all()
     serializer_class = ChangeUserSerializer
-    # permission_classes = (IsAuthenticated, IsOwner)
+    permission_classes = (IsAuthenticated, IsOwner)
+
+    def get_object(self):
+        return USER.objects.get(auth_token=self.request.user.auth_token)
 
 
 # class ChangeUserViewSet(ModelViewSet):

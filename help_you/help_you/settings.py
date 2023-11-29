@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'quit',
     'rest_framework',
     'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -139,15 +140,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# REST_FRAMEWORK = {
-#   'DEFAULT_AUTHENTICATION_CLASSES': (
-#     'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-#   ),
-# }
-
-# JWT_AUTH = {
-#     'JWT_VERIFY': True,
-#     'JWT_VERIFY_EXPIRATION': True,
-#     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3000),
-#     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
