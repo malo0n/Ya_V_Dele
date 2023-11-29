@@ -1,14 +1,6 @@
-# import jwt
-
-# from django.conf import settings
-from django.contrib.auth import get_user_model, authenticate, login
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
+from django.contrib.auth import get_user_model
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, CreateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-# from rest_framework.decorators import api_view, permission_classes
-from rest_framework import status
 
 from .serializers import *
 from .models import BadHabits
@@ -18,7 +10,7 @@ from .permisions import IsOwner
 USER = get_user_model()
 
 
-class UserViewSet(ModelViewSet):
+class RegisterUserView(CreateAPIView):
     serializer_class = UserSerializer
     queryset = USER.objects.all()
     permission_classes = (AllowAny, )

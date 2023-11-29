@@ -17,7 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
         exclude = ('id', 'is_superuser', 'first_name', 'last_name', 
-                  'email', 'is_staff', 'is_active')
+                  'email', 'is_staff', 'is_active', 'groups',
+                  'user_permissions')
 
     def create(self, validated_data):
         user = USER.objects.create(
@@ -41,7 +42,7 @@ class ChangeUserSerializer(serializers.ModelSerializer):
         model = USER
         exclude = ('id', 'is_superuser', 'first_name', 'last_name', 
                   'email', 'is_staff', 'is_active', 'last_login',
-                   'date_joined', 'password')
+                   'date_joined', 'password', 'groups', 'user_permissions')
     
     def to_representation(self, instance):
         representation = super().to_representation(instance)
