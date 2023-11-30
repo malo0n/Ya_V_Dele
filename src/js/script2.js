@@ -1,6 +1,4 @@
 let token = window.localStorage.getItem('token');
-window.onload = getHabits();
-window.onload = profileUserGet();
 
 //загрузка аватара
 
@@ -19,11 +17,10 @@ function addHabits(data){
         let newHabit = document.createElement("label");
         newHabit.classList = "habit__container";
         newHabit.innerHTML = `<input type="checkbox" 
-        class="habit__container__input" name="bad_habits" id="${data[key].id}" value="${data[key].title}">${data[key].title}`;
+        class="habit__container__input" name="title" id="${data[key].id}" value="${data[key].title}">${data[key].title}`;
         habitBox.append(newHabit);
     }
 }
-
 
 function getHabits() {
     fetch('http://127.0.0.1:8000/api/habits/', {
@@ -40,32 +37,41 @@ function getHabits() {
     })
 }
 
-
+const form = document.getElementById('profileForm');
+const formData = new FormData(form);
 //фетч на данные профиля
-const formData = new FormData(document.getElementById('profileForm'));
 console.log(token);     
-function profileUserPost() {
+
+console.log(form);
+function profileUserPost(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+    const formData = new FormData(event.target);
+     // Get form data from the submitted form
     fetch('http://127.0.0.1:8000/api/profile/', {
         method: 'PATCH',
-        headers: { 
+        headers: {
             'Authorization': 'Token ' + token,
         },
         body: formData,
     })
     .then(response => response.json())
-    .then(() => {
-        document.getElementById('profileForm').reset();
+    .then((data) => {
+        console.log(data);
     })
     .catch(error => {
-        if (response.status === 400) {
+        if (error.status === 400) {
             for (const field in data.errors) {
                 const errorField = document.getElementById(`${field}Error`);
                 errorField.textContent = data.errors[field];
             }
         }
-        console.log('Error: ', error);
+        console.error('Error: ', error);
     });
+    return false;
 }
+
+
+
 let userName = document.querySelector('.main__form__user-info__card__name input');
 let userGender = document.querySelectorAll('.main__form__user-info__card__gender input');
 let userDateOfBirth = document.querySelector('.card__input__date');
@@ -75,11 +81,13 @@ function genderUpdate(userGender, data){
     if (data.gender == 'M') userGender[0].checked = true;
     else if (data.gender == 'W') userGender[1].checked = true;
 }
+
 function habitsUpdate(data){
     for (let key in data.bad_habits){
         document.getElementById(`${key}`).checked = true;
     }
 }
+
 function profileUpdate(data){
     userName.value = data.name; 
     genderUpdate(userGender, data);
@@ -111,7 +119,8 @@ function profileUserGet() {
         console.log('Error: ', error);
     });
 }
+window.onload = getHabits();
 
-for (let [key, value] of formData) {
-    console.log(`${key} - ${value}`)
-}
+//window.preventDefault();
+// window.onload = profileUserGet();
+form.addEventListener('submit', profileUserPost);
