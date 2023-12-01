@@ -46,33 +46,49 @@ console.log(form);
 
 function profileUserPost(event) {
     event.preventDefault(); // Prevent default form submission behavior
-    const formdata = new FormData(event.target);
-    // Get form data from the submitted form   
-    let bad_habits_array = new Array();
-    let bad_habits = document.querySelectorAll('.habit__container__input:checked');
-    bad_habits.forEach(element=>{
-        bad_habits_array.push({
-            title : element.value,
-        })
-    })
-    for(let name of formdata) {
-        if(name[0]=='title'){
-            formdata.delete(name[0]);
-        }
-    }
-    bad_habits_array.forEach(element =>{
-        console.log(element);
-    })
-    formdata.append('bad_habits', JSON.stringify(bad_habits_array));
-    console.log(Array.from(formdata.entries()));
-    console.log(formdata.get('bad_habits'));
+    // const formdata = new FormData(event.target);
+    // // Get form data from the submitted form   
+    // let bad_habits_array = [
+    //     {'title': 'Алкоголизм'}
+    // ];
+    // JSON.stringify(bad_habits_array);
+    // console.log(bad_habits_array);
+    // let bad_habits = document.querySelectorAll('.habit__container__input:checked');
+    // bad_habits.forEach(element=>{
+    //     bad_habits_array.push({
+    //         title : element.value,
+    //     })
+    // })
+    // for(let name of formdata) {
+    //     if(name[0]=='title'){
+    //         formdata.delete(name[0]);
+    //     }
+    // }
+    // bad_habits_array.forEach(element =>{
+    //     console.log(element);
+    // })
+    // formdata.append('bad_habits', JSON.stringify(bad_habits_array));
+    // console.log(formdata.get('bad_habits'));
+    // let a = JSON.stringify(formdata);
+    // console.log(Array.from(formdata.entries()));
 
+    let test = {
+        "name": "79035470171",
+        "gender": "W",
+        "bad_habits": [
+            {"title": "Курение"}
+        ]
+    }
+    console.log(test);
+    let a = JSON.stringify(test);
+    console.log(a);
     fetch('http://127.0.0.1:8000/api/profile/', {
         method: 'PATCH',
         headers: {
+            'Content-type': 'application/json; charset=UTF-8',
             'Authorization': 'Token ' + token,
         },
-        body: formdata,
+        body: a,
     })
     .then(response => response.json())
     .then((data) => {
