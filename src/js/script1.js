@@ -19,17 +19,6 @@ switchButton.addEventListener('click', () =>{
         switchButton.innerHTML = "Уже есть аккаунт? Войдите!";
     }
 });
-// function serializeForm(form) {
-//     return new FormData(form);
-// }
-function serializeForm(form) {
-    return new FormData(form);
-}
-async function handleFormSubmit(event) {
-    event.preventDefault()
-    const data = serializeForm(event.target);
-    console.log(Array.from(data.entries()));
-}
 function registerUser(event) {
     event.preventDefault();
     console.log(event);
@@ -38,11 +27,12 @@ function registerUser(event) {
     if (formData.get('repeat_password') === formData.get('password')) {
         formData.delete('repeat_password');
         fetch('http://127.0.0.1:8000/api/register/', {
-            method: 'POST',
-            headers: {
-            },
-            body: formData,
-        })
+        method: 'POST',
+        headers: {
+            // 'Content-Type' : 'application/json; charset=UTF-8',
+        },
+        body: formData
+    })
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -69,12 +59,12 @@ function registerUser(event) {
 function loginUser(event) {
     event.preventDefault();
     console.log(event);
-    const formData = new FormData(document.getElementById('loginForm'));
+    const formData = new FormData(event.target);
     console.log(Array.from(formData.entries()));
     fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
         headers: {
-
+            // 'Content-Type' : 'application/json; charset=UTF-8',
         },
         body: formData
     })
@@ -84,7 +74,7 @@ function loginUser(event) {
         window.localStorage.setItem('token', token);
         console.log(token);
         document.getElementById('loginForm').reset();
-        // window.location.href = 'profile.html';
+        window.location.href = 'profile.html';
     })
     .catch(error => {
         if (error.status === 400) {
