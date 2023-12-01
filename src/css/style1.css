@@ -39,7 +39,6 @@
   text-decoration: none;
   color: var(--black);
 }
-
 .text_link:hover {
   cursor: pointer;
   text-decoration: underline;
@@ -71,7 +70,6 @@ header {
   align-items: start;
   gap: 40px;
 }
-
 .header__navbar button {
   font-weight: 400;
   font-size: 20px;
@@ -79,7 +77,6 @@ header {
   transition: all 0.3s ease 0s;
   padding: 25px 0px;
 }
-
 .header__navbar button:hover {
   cursor: pointer;
   transform: translateY(-7px);
@@ -132,7 +129,6 @@ h1 {
   display: flex;
   flex-direction: column;
 }
-
 .card__registration p {
   font-size: 36px;
   font-weight: 500;
@@ -143,7 +139,6 @@ h1 {
   display: flex;
   flex-direction: column;
 }
-
 .card__authorization p {
   font-size: 36px;
   font-weight: 500;
@@ -158,11 +153,9 @@ h1 {
   margin-left: 9px;
   margin-right: 9px;
 }
-
 .card__form label {
   font-size: 16px;
 }
-
 .card__form input {
   border-radius: 10px;
   background-color: var(--input_bcg);
@@ -171,12 +164,7 @@ h1 {
   font-size: 18px;
   margin: 5px 0px;
 }
-
-.card__form__link_password {
-  align-self: self-end;
-}
-
-.card__button {
+.card__form button {
   background-color: var(--pink);
   margin: 40px 19px;
   color: var(--white);
@@ -187,12 +175,15 @@ h1 {
   transition: 0.3s;
   border: 1px solid var(--pink);
 }
-
-.card__button:hover {
+.card__form button:hover {
   background-color: var(--white);
   color: var(--pink);
   border: 1px solid var(--pink);
   cursor: pointer;
+}
+
+.card__form__link_password {
+  align-self: self-end;
 }
 
 .card__footer {
@@ -222,7 +213,6 @@ h1 {
   background-color: var(--white);
   color: var(--blue);
 }
-
 .card__footer__auth__switch-button:hover {
   cursor: pointer;
 }
@@ -256,7 +246,6 @@ h1 {
   justify-content: space-around;
   margin: 0px 10px;
 }
-
 .card__footer__bottom_icons img:hover {
   cursor: pointer;
 }
@@ -275,6 +264,6 @@ h1 {
 .footer__text {
   margin: 35px 175px;
   font-size: 20px;
-} 
+}
 
 /*# sourceMappingURL=style1.css.map */

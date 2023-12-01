@@ -158,27 +158,26 @@ h1{
         font-size: 18px;
         margin: 5px 0px;
     }
+    button{
+        background-color: var(--pink);
+        margin: 40px 19px;
+        color:var(--white);
+        font-size: 18px;
+        font-weight: 700;
+        padding: 10px;
+        border-radius:10px;
+        transition: 0.3s;
+        border:1px solid var(--pink);
+        &:hover{
+            background-color: var(--white);
+            color: var(--pink);
+            border: 1px solid var(--pink);
+            cursor:pointer;
+        }
+    }
 }
 .card__form__link_password{
     align-self: self-end;
-}
-
-.card__button{
-    background-color: var(--pink);
-    margin: 40px 19px;
-    color:var(--white);
-    font-size: 18px;
-    font-weight: 700;
-    padding: 10px;
-    border-radius:10px;
-    transition: 0.3s;
-    border:1px solid var(--pink);
-    &:hover{
-        background-color: var(--white);
-        color: var(--pink);
-        border: 1px solid var(--pink);
-        cursor:pointer;
-    }
 }
 .card__footer{
     display: flex;

@@ -2,6 +2,8 @@
 let registrationCard = document.querySelector('.card__registration');
 let authorizationCard = document.querySelector('.card__authorization');
 let switchButton = document.querySelector('.card__footer__auth__switch-button');
+const registerForm = document.getElementById('registrationForm');
+const loginForm = document.getElementById('loginForm');
 registrationCard.style.display = "flex";
 authorizationCard.style.display = "none";
 
@@ -17,23 +19,41 @@ switchButton.addEventListener('click', () =>{
         switchButton.innerHTML = "Уже есть аккаунт? Войдите!";
     }
 });
-
-function registerUser() {
-    const formData = new FormData(document.getElementById('registrationForm'));
+// function serializeForm(form) {
+//     return new FormData(form);
+// }
+function serializeForm(form) {
+    return new FormData(form);
+}
+async function handleFormSubmit(event) {
+    event.preventDefault()
+    const data = serializeForm(event.target);
+    console.log(Array.from(data.entries()));
+}
+async function registerUser(event) {
+    event.preventDefault();
+    const formData = serializeForm(event.target);
+    console.log(Array.from(formData.entries()));
     if (formData.get('repeat_password') === formData.get('password')) {
         formData.delete('repeat_password');
-        fetch('http://127.0.0.1:8000/api/register/', {
+        await fetch('http://127.0.0.1:8000/api/register/', {
             method: 'POST',
-            body: formData
+            headers: {
+            },
+            body: formData,
         })
         .then(response => response.json())
         .then(data => {
             console.log(data);
             document.getElementById('registrationForm').reset();
-            document.location.href = 'profile.html';
+        })
+        .then(()=>{
+            registrationCard.style.display = "none";
+            authorizationCard.style.display = "flex";
+            switchButton.innerHTML = "Нет аккаунта? Зарегистрируйтесь!";
         })
         .catch(error => {
-            if (response.status === 400) {
+            if (error.status === 400) {
                 for (const field in data.errors) {
                     const errorField = document.getElementById(`${field}Error`);
                     errorField.textContent = data.errors[field];
@@ -45,10 +65,14 @@ function registerUser() {
     };
 }
 
-function loginUser() {
+async function loginUser() {
     const formData = new FormData(document.getElementById('loginForm'));
-    fetch('http://127.0.0.1:8000/api/login/', {
+    console.log(Array.from(formData.entries()));
+    await fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
         body: formData
     })
     .then(response => response.json())
@@ -59,7 +83,7 @@ function loginUser() {
         window.location.href = 'profile.html';
     })
     .catch(error => {
-        if (response.status === 400) {
+        if (error.status === 400) {
             for (const field in data.errors) {
                 const errorField = document.getElementById(`${field}Error`);
                 errorField.textContent = data.errors[field];
@@ -68,3 +92,5 @@ function loginUser() {
     });
 }
 
+loginForm.addEventListener('submit', loginUser);
+registerForm.addEventListener('submit', handleFormSubmit);

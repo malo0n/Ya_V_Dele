@@ -38,21 +38,30 @@ function getHabits() {
 }
 
 const form = document.getElementById('profileForm');
-const formData = new FormData(form);
+// const data = new FormData(form);
 //фетч на данные профиля
 console.log(token);     
-
+function serializeForm(form) {
+    return new FormData(form);
+}
+async function handleFormSubmit(event) {
+    event.preventDefault()
+    const data = serializeForm(event.target);
+    console.log(Array.from(data.entries()));
+}
 console.log(form);
 function profileUserPost(event) {
     event.preventDefault(); // Prevent default form submission behavior
-    const formData = new FormData(event.target);
+    const data = serializeForm(event.target);
+    console.log(Array.from(data.entries()));
      // Get form data from the submitted form
     fetch('http://127.0.0.1:8000/api/profile/', {
         method: 'PATCH',
         headers: {
+            'Content-Type': 'multipart/form-data',
             'Authorization': 'Token ' + token,
         },
-        body: formData,
+        body: data,
     })
     .then(response => response.json())
     .then((data) => {
@@ -123,4 +132,4 @@ window.onload = getHabits();
 
 //window.preventDefault();
 // window.onload = profileUserGet();
-form.addEventListener('submit', profileUserPost);
+form.addEventListener('submit', handleFormSubmit);
