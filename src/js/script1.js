@@ -2,7 +2,7 @@
 let registrationCard = document.querySelector('.card__registration');
 let authorizationCard = document.querySelector('.card__authorization');
 let switchButton = document.querySelector('.card__footer__auth__switch-button');
-const registerForm = document.getElementById('registrationForm');
+const registrationForm = document.getElementById('registrationForm');
 const loginForm = document.getElementById('loginForm');
 registrationCard.style.display = "flex";
 authorizationCard.style.display = "none";
@@ -30,13 +30,14 @@ async function handleFormSubmit(event) {
     const data = serializeForm(event.target);
     console.log(Array.from(data.entries()));
 }
-async function registerUser(event) {
+function registerUser(event) {
     event.preventDefault();
-    const formData = serializeForm(event.target);
+    console.log(event);
+    const formData = new FormData(document.getElementById('registrationForm'));
     console.log(Array.from(formData.entries()));
     if (formData.get('repeat_password') === formData.get('password')) {
         formData.delete('repeat_password');
-        await fetch('http://127.0.0.1:8000/api/register/', {
+        fetch('http://127.0.0.1:8000/api/register/', {
             method: 'POST',
             headers: {
             },
@@ -65,13 +66,15 @@ async function registerUser(event) {
     };
 }
 
-async function loginUser() {
+function loginUser(event) {
+    event.preventDefault();
+    console.log(event);
     const formData = new FormData(document.getElementById('loginForm'));
     console.log(Array.from(formData.entries()));
-    await fetch('http://127.0.0.1:8000/api/login/', {
+    fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
         headers: {
-            'Content-Type': 'multipart/form-data',
+
         },
         body: formData
     })
@@ -79,8 +82,9 @@ async function loginUser() {
     .then(data => {
         const token = data.token;
         window.localStorage.setItem('token', token);
-        document.getElementById('registrationForm').reset();
-        window.location.href = 'profile.html';
+        console.log(token);
+        document.getElementById('loginForm').reset();
+        // window.location.href = 'profile.html';
     })
     .catch(error => {
         if (error.status === 400) {
@@ -93,4 +97,4 @@ async function loginUser() {
 }
 
 loginForm.addEventListener('submit', loginUser);
-registerForm.addEventListener('submit', handleFormSubmit);
+registrationForm.addEventListener('submit', registerUser);

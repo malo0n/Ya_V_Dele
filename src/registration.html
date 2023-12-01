@@ -33,13 +33,13 @@
                         <p>Зарегистрироваться</p>
                         <form class="card__form" id="registrationForm" name="registrationForm">
 
-                            <label for="phone_number">Номер телефона</label>
-                            <input type="tel" id="reg_phone_number" name="username" value="">
+                            <label for="reg_phone_number">Номер телефона</label>
+                            <input type="tel" id="reg_phone_number" name="username" value="" autocomplete="tel-country-code" maxlength="11">
 
-                            <label for="password">Пароль</label>
+                            <label for="reg_password">Пароль</label>
                             <input type="password" id="reg_password" name="password" value="">
 
-                            <label for="repeat_password">Повторите пароль</label>
+                            <label for="reg_repeat_password">Повторите пароль</label>
                             <input type="password" id="reg_repeat_password" name="repeat_password" value="">
 
                             <button class="card__form__register_button" type="submit">Зарегистрироваться</button>
