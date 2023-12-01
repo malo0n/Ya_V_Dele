@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from rest_framework import serializers, status
-from rest_framework.response import Response
+from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
 from .models import BadHabits
@@ -11,7 +10,6 @@ USER = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    last_login = serializers.DateTimeField(default=datetime.now())
     date_joined = serializers.DateTimeField(default=datetime.now())
 
     class Meta:
@@ -58,15 +56,17 @@ class ChangeUserSerializer(serializers.ModelSerializer):
     
     def to_internal_value(self, data):
         bad_habits_data = data.get('bad_habits', [])
-        internal_value = {
-            'bad_habits': [{str('title'): habit[str('title')]} for habit in bad_habits_data]
-        }
-        return super().to_internal_value(internal_value)
+        internal_value = super().to_internal_value(data)
+        internal_value['bad_habits'] = [
+            {'title': habit['title']} for habit in bad_habits_data
+            ]
+        return internal_value
     
 
     def update(self, instance, validated_data):
-        instance.bad_habits.clear()
         bad_habits = validated_data.get('bad_habits', [])
+        validated_data['bad_habits'] = ()
+        instance = super().update(instance, validated_data)
         for bad_habit in bad_habits:
             habit_title = bad_habit.get('title')
             try:
