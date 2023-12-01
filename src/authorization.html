@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Я бросаю</title>
-    <link rel="stylesheet" href="css/style1.css">
+    <link rel="stylesheet" href="css/style4.css">
 </head>
 <body>
     <header>
@@ -29,25 +29,22 @@
                         <img src="img/login_picture.svg" alt="">
                 </div>
                 <div class="card">
-                    <div class="card__registration">
-                        <p>Зарегистрироваться</p>
-                        <form class="card__form" id="registrationForm" name="registrationForm">
+                    <div class="card__authorization">
+                        <p>Войти</p>
+                        <form class="card__form" id="loginForm" name="loginForm">
 
-                            <label for="reg_phone_number">Номер телефона</label>
-                            <input type="tel" id="reg_phone_number" name="username" value="" autocomplete="tel-country-code" maxlength="11">
+                            <label for="phone_number">Номер телефона</label>
+                            <input type="tel" id="phone_number" name="username" value="">
 
-                            <label for="reg_password">Пароль</label>
-                            <input type="password" id="reg_password" name="password" value="">
-
-                            <label for="reg_repeat_password">Повторите пароль</label>
-                            <input type="password" id="reg_repeat_password" name="repeat_password" value="">
-
-                            <button class="card__form__register_button" type="submit">Зарегистрироваться</button>
+                            <label for="password">Пароль</label>
+                            <input type="password" id="password" name="password" value="">
+                            <a href="#" class="text_link card__form__link_password"><span>Забыли пароль?</span></a>
+                            <button class="card__form__login_button" type="submit">Войти</button>
                         </form>
                     </div>
                     <div class="card__footer">
                         <div class="card__footer__auth">
-                            <button class="card__footer__auth__switch-button" type="button">Уже есть аккаунт? Войдите!</button>
+                            <button class="card__footer__auth__switch-button" type="button">Нет аккаунта? Зарегистрируйтесь!</button>
                         </div>
                         <div class="card__footer__divider">
                             <div class="card__footer__bar"></div>
@@ -78,7 +75,7 @@
             <p class="footer__text">©2023. Я бросаю. Все права защищены</p>
         </div>
     </footer>
-    <script src="js/script1.js"></script>
+    <script src="js/script4.js"></script>
 </body>
 
 </html>

@@ -55,28 +55,28 @@ function profileUserPost(event) {
     const data = new FormData(event.target);
     console.log(Array.from(data.entries()));
      // Get form data from the submitted form   
-    fetch('http://127.0.0.1:8000/api/profile/', {
-        method: 'PATCH',
-        headers: {
-            // 'Content-Type': 'multipart/form-data',
-            'Authorization': 'Token ' + token,
-        },
-        body: data,
-    })
-    .then(response => response.json())
-    .then((data) => {
-        console.log(data);
-    })
-    .catch(error => {
-        if (error.status === 400) {
-            for (const field in data.errors) {
-                const errorField = document.getElementById(`${field}Error`);
-                errorField.textContent = data.errors[field];
-            }
-        }
-        console.error('Error: ', error);
-    });
-    return false;
+    // fetch('http://127.0.0.1:8000/api/profile/', {
+    //     method: 'PATCH',
+    //     headers: {
+    //         // 'Content-Type': 'multipart/form-data',
+    //         'Authorization': 'Token ' + token,
+    //     },
+    //     body: data,
+    // })
+    // .then(response => response.json())
+    // .then((data) => {
+    //     console.log(data);
+    // })
+    // .catch(error => {
+    //     if (error.status === 400) {
+    //         for (const field in data.errors) {
+    //             const errorField = document.getElementById(`${field}Error`);
+    //             errorField.textContent = data.errors[field];
+    //         }
+    //     }
+    //     console.error('Error: ', error);
+    // });
+    // return false;
 }
 
 
