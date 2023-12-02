@@ -38,45 +38,61 @@ function getHabits() {
 }
 
 const form = document.getElementById('profileForm');
-// const data = new FormData(form);
 //фетч на данные профиля
+
 console.log(token);     
-// function serializeForm(form) {
-//     return new FormData(form);
-// }
-// async function handleFormSubmit(event) {
-//     event.preventDefault()
-//     const data = serializeForm(event.target);
-//     console.log(Array.from(data.entries()));
-// }
 console.log(form);
+
+
 function profileUserPost(event) {
     event.preventDefault(); // Prevent default form submission behavior
-    const data = new FormData(event.target);
-    console.log(Array.from(data.entries()));
-     // Get form data from the submitted form   
-    // fetch('http://127.0.0.1:8000/api/profile/', {
-    //     method: 'PATCH',
-    //     headers: {
-    //         // 'Content-Type': 'multipart/form-data',
-    //         'Authorization': 'Token ' + token,
-    //     },
-    //     body: data,
-    // })
-    // .then(response => response.json())
-    // .then((data) => {
-    //     console.log(data);
-    // })
-    // .catch(error => {
-    //     if (error.status === 400) {
-    //         for (const field in data.errors) {
-    //             const errorField = document.getElementById(`${field}Error`);
-    //             errorField.textContent = data.errors[field];
-    //         }
-    //     }
-    //     console.error('Error: ', error);
-    // });
-    // return false;
+    const formdata = new FormData(event.target);
+    // Get form data from the submitted form   
+    let bad_habits_array = new Array();
+    let bad_habits = document.querySelectorAll('.habit__container__input:checked');
+    bad_habits.forEach(element=>{
+        bad_habits_array.push({
+            title : element.value,
+        })
+    })
+    for(let name of formdata) {
+        if(name[0]=='title'){
+            formdata.delete(name[0]);
+        }
+    }
+    bad_habits_array.forEach(element =>{
+        console.log(element);
+    })
+    // formdata.append('bad_habits', JSON.stringify(bad_habits_array));
+    bad_habits_array.forEach((badHabit, index) => {
+        Object.entries(badHabit).forEach(([key, value]) => {
+            formdata.append(bad_habits[index][key], value);
+        });
+    });
+    console.log(Array.from(formdata.entries()));
+    console.log(formdata.get('bad_habits'));
+
+    fetch('http://127.0.0.1:8000/api/profile/', {
+        method: 'PATCH',
+        headers: {
+            'Authorization': 'Token ' + token,
+        },
+        body: formdata,
+    })
+    .then(response => response.json())
+    .then((data) => {
+        console.log(data);
+    })
+    .catch(error => {
+        if (error.status === 400) {
+            for (const field in data.errors) {
+                const errorField = document.getElementById(`${field}Error`);
+                errorField.textContent = data.errors[field];
+            }
+        }
+        console.error('Error: ', error);
+    });
+    return false;
 }
 
 
