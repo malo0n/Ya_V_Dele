@@ -63,12 +63,7 @@ function profileUserPost(event) {
     bad_habits_array.forEach(element =>{
         console.log(element);
     })
-    // formdata.append('bad_habits', JSON.stringify(bad_habits_array));
-    bad_habits_array.forEach((badHabit, index) => {
-        Object.entries(badHabit).forEach(([key, value]) => {
-            formdata.append(bad_habits[index][key], value);
-        });
-    });
+    formdata.append('bad_habits', JSON.stringify(bad_habits_array));
     console.log(Array.from(formdata.entries()));
     console.log(formdata.get('bad_habits'));
 
