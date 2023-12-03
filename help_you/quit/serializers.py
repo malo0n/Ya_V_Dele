@@ -3,7 +3,7 @@ from datetime import datetime
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
-from .models import BadHabits
+from .models import Chat, BadHabits, Message
 
 
 USER = get_user_model()
@@ -78,3 +78,16 @@ class ChangeUserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+    
+
+class UsersChatsSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = USER
+        fields = ('username', 'chats')
+
+
+class ChatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = ('messages',)
+        

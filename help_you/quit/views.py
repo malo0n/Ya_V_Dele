@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, CreateAPIView
+from rest_framework import status
+from rest_framework.generics import *
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -47,3 +48,48 @@ class ChangeUserView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return USER.objects.get(auth_token=self.request.user.auth_token)
+
+
+class UsersChatsView(ListCreateAPIView):
+    serializer_class = UsersChatsSerialiser
+    permission_classes = (IsAuthenticated, IsOwner)
+
+    def get_object(self):
+        return USER.objects.get(auth_token=self.request.user.auth_token)
+    
+
+    def get_queryset(self):
+        return Chat.objects.filter(user=self.request.user)
+    
+
+    def create(self, request, *args, **kwargs):
+        username = request.data.get('username', None)
+        if not username:
+            return Response(
+                {
+                    'detail':
+                    'The request must specify the username of the second user'
+                    }, status=status.HTTP_400_BAD_REQUEST)
+        user = self.request.user
+        try:
+            second_user = USER.objects.get(username=username)
+        except USER.DoesNotExist:
+            return Response(
+                {
+                    'detail':
+                    'There is no such user'
+                }, status=status.HTTP_404_NOT_FOUND)
+        if user.chats.filter(id__in=second_user.chats.all()):
+            return Response(
+            {
+                'detail':
+                'Users already have a chat'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        chat = Chat.objects.create()
+        user.chats.add(chat)
+        second_user.chats.add(chat)
+        serializer = ChatsSerializer(chat)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+        

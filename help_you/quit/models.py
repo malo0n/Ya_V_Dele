@@ -11,6 +11,24 @@ class BadHabits(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+    
+
+class Message(models.Model):
+    sender = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name="Отправитель")
+    content = models.TextField(verbose_name="Сообщение")
+    departure_time = models.DateTimeField(auto_now_add=True, verbose_name="Время отправления")
+
+    class Meta:
+        verbose_name = "Сообщение"
+        verbose_name_plural = "Сообщения"
+    
+
+class Chat(models.Model):
+    messages = models.ManyToManyField('Message', blank=True, verbose_name="Сообщения")
+
+    class Meta:
+        verbose_name = "Чат"
+        verbose_name_plural = "Чаты"
 
 
 class User(AbstractUser):
@@ -24,23 +42,10 @@ class User(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
     about_me = models.TextField(null=True, blank=True, verbose_name="Обо мне")
     photo = models.FileField(null=True, blank=True, verbose_name="Фото")
-    bad_habits = models.ManyToManyField(BadHabits, blank=True, verbose_name="Плохие привычки")
+    bad_habits = models.ManyToManyField('BadHabits', blank=True, verbose_name="Плохие привычки")
+    chats = models.ManyToManyField('Chat', blank=True, verbose_name="Чаты")
 
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
-
-
-class Chat(models.Model):
-    interlocutors = models.ManyToManyField(User, verbose_name="Собеседники")
-
-    class Meta:
-        verbose_name = "Чат"
-        verbose_name_plural = "Чаты"
-
-
-class Message(models.Model):
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, verbose_name="Чат")
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Отправитель")
-    content = models.TextField(verbose_name="Сообщение")
-    departure_time = models.DateTimeField(auto_now_add=True, verbose_name="Время отправления")
+        
