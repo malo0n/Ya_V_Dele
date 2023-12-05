@@ -1,4 +1,4 @@
-//смена карточки
+//*смена карточки
 let registrationCard = document.querySelector('.card__registration');
 let authorizationCard = document.querySelector('.card__authorization');
 let switchButton = document.querySelector('.card__footer__auth__switch-button');
@@ -19,6 +19,11 @@ switchButton.addEventListener('click', () =>{
         switchButton.innerHTML = "Уже есть аккаунт? Войдите!";
     }
 });
+
+//* ❤ //
+
+//* Регистрация пользователя //
+
 function registerUser(event) {
     event.preventDefault();
     console.log(event);
@@ -55,6 +60,11 @@ function registerUser(event) {
         console.log("Пароли не совпадают");
     };
 }
+registrationForm.addEventListener('submit', registerUser);
+
+//* ❤ //
+
+//* Логин пользователя //
 
 function loginUser(event) {
     event.preventDefault();
@@ -74,7 +84,9 @@ function loginUser(event) {
         window.localStorage.setItem('token', token);
         console.log(token);
         document.getElementById('loginForm').reset();
-        window.location.href = 'profile.html';
+        if (token!= null) {
+            window.location.href = 'profile.html';
+        } 
     })
     .catch(error => {
         if (error.status === 400) {
@@ -87,4 +99,5 @@ function loginUser(event) {
 }
 
 loginForm.addEventListener('submit', loginUser);
-registrationForm.addEventListener('submit', registerUser);
+
+//* ❤ //
