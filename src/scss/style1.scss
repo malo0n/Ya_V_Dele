@@ -10,6 +10,14 @@
     /* letter-spacing: 0.8px; */
     outline: 0;
     outline-offset: 0;
+    &::-webkit-scrollbar{
+        height: auto;
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color:var(--scrollbar);
+        border-radius:10px;
+    }
 }
 
 @font-face {
