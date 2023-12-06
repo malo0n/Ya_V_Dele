@@ -13,6 +13,7 @@ let inputAvatar = document.querySelector('.main__form__user-habits__avatar_input
 inputAvatar.addEventListener('change', () =>{
     userAvatar.src = URL.createObjectURL(inputAvatar.files[0]);
 })
+window.localStorage.setItem('avatar', userAvatar.src);
 //* ❤ //
 
 //* загрузка привычек

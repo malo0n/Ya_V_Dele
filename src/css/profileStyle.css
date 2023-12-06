@@ -11,6 +11,14 @@
   outline: 0;
   outline-offset: 0;
 }
+*::-webkit-scrollbar {
+  height: auto;
+  width: 6px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar);
+  border-radius: 10px;
+}
 
 @font-face {
   font-family: istok_web;
@@ -307,7 +315,6 @@ header {
 .habit__container {
   padding: 8px 8px;
   border-radius: 12px;
-  height: -moz-fit-content;
   height: fit-content;
   background-color: var(--white);
   transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -333,4 +340,6 @@ header {
 .footer__text {
   margin: 35px 175px;
   font-size: 20px;
-}/*# sourceMappingURL=style2.css.map */
+}
+
+/*# sourceMappingURL=profileStyle.css.map */

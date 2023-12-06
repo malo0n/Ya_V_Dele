@@ -62,7 +62,7 @@
     color:var(--blue);
 }
 
-//* <3 //
+//* ❤ //
 
 //* миксины //
 
@@ -81,7 +81,7 @@
     }
 }
 
-//* <3 //
+//* ❤ //
 
 //* Шапка *//
 
@@ -113,9 +113,13 @@ header{
             transform: translateY(-7px);
         }
     }
+    .header__navbar__chats{
+        color:var(--pink);
+        font-weight: bold;
+    }
     
 }
-//* <3 //
+//* ❤ //
 
 //* main //
 
@@ -157,8 +161,8 @@ header{
                         margin: 0px 10px;
                         background-image: url(../icons/search.svg);
                         @include icon;
-                        height: 22px;
-                        width: 22px;
+                        height: 24px;
+                        width: 23px;
                     }
                     .main__chats__header__head_tools-settings{
                         margin: 0px 10px;
@@ -198,6 +202,7 @@ header{
                 }
             }
         }
+        //* общие чаты //
         .main__chats__body{
             height: 100%;
             display: flex;
@@ -214,6 +219,7 @@ header{
                 padding-bottom: 15px;
                 padding-left: 15px;
                 padding-right: 5px;
+                margin: 2px 0px;
                 width: 100%;
                 border-radius: 10px;
                 &:hover{
@@ -240,6 +246,7 @@ header{
             }
         }
     }
+    //* окно с диалогом //
     .main__dialog{
         height: 100%;
         width: 70%;
@@ -304,6 +311,10 @@ header{
                     .main__dialog__container__body_textbox-text{
                         font-size: 20px;
                     }
+                    .main__dialog__container__body_textbox-time{
+                        font-size: 12px;
+                        text-align: end;
+                    }
                 }
             }
             .main__dialog__container__bottom{
@@ -320,7 +331,6 @@ header{
                     border-radius:10px;
                     padding: 10px;
                     font-size: 16px;
-
                 }
                 .main__dialog__container__bottom_emoji{
                     background-image: url(../icons/emoji.svg);
@@ -361,7 +371,7 @@ header{
 }
 
 
-//* <3 //
+//* ❤ //
 
 //* подвал //
 
@@ -374,4 +384,4 @@ header{
     font-size: 20px;
 }
 
-//* <3 //
+//* ❤ //
