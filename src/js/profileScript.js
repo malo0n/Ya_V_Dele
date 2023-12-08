@@ -95,61 +95,61 @@ function profileUserPost(event) {
         });
         return false;
     }
-    form.addEventListener('submit', profileUserPost);
-    
-    //* ❤ //
-    
-    //* Загрузка данных профиля
-    
-    let userName = document.querySelector('.main__form__user-info__card__name input');
-    let userGender = document.querySelectorAll('.main__form__user-info__card__gender input');
-    let userDateOfBirth = document.querySelector('.card__input__date');
-    let userDescription = document.querySelector('.main__form__user-info__card__description textarea');
-    
-    function genderUpdate(userGender, data){
-        if (data.gender == 'M') userGender[0].checked = true;
-        else if (data.gender == 'W') userGender[1].checked = true;
+form.addEventListener('submit', profileUserPost);
+
+//* ❤ //
+
+//* Загрузка данных профиля
+
+let userName = document.querySelector('.main__form__user-info__card__name input');
+let userGender = document.querySelectorAll('.main__form__user-info__card__gender input');
+let userDateOfBirth = document.querySelector('.card__input__date');
+let userDescription = document.querySelector('.main__form__user-info__card__description textarea');
+
+function genderUpdate(userGender, data){
+    if (data.gender == 'M') userGender[0].checked = true;
+    else if (data.gender == 'W') userGender[1].checked = true;
+}
+
+function habitsUpdate(data){
+    for (let key in data.bad_habits){
+        let habit_id = data.bad_habits[key].id;
+        document.getElementById(habit_id).checked = true;
     }
-    
-    function habitsUpdate(data){
-        for (let key in data.bad_habits){
-            let habit_id = data.bad_habits[key].id;
-            document.getElementById(habit_id).checked = true;
+    console.log(data.bad_habits[0].id);
+}
+
+function profileUpdate(data){
+    userName.value = data.name; 
+    genderUpdate(userGender, data);
+    userDateOfBirth.value = data.date_of_birth;
+    userDescription.value = data.about_me;
+    if (data.photo != null) {
+        userAvatar.src = data.photo;
+    }
+    habitsUpdate(data);
+}
+
+function profileUserGet() {
+    fetch('http://127.0.0.1:8000/api/profile/', {
+        headers: { 
+            'Authorization': 'Token ' + token,
         }
-        console.log(data.bad_habits[0].id);
-    }
-    
-    function profileUpdate(data){
-        userName.value = data.name; 
-        genderUpdate(userGender, data);
-        userDateOfBirth.value = data.date_of_birth;
-        userDescription.value = data.about_me;
-        if (data.photo != null) {
-            userAvatar.src = data.photo;
+    })
+    .then(response => response.json())
+    .then((data) => {
+        console.log(data);
+        profileUpdate(data);
+    })
+    .catch(error => {
+        if (error.status == 400) {
+            for (const field in data.errors) {
+                const errorField = document.getElementById(`${field}Error`);
+                errorField.textContent = data.errors[field];
+            }
         }
-        habitsUpdate(data);
-    }
-    
-    function profileUserGet() {
-        fetch('http://127.0.0.1:8000/api/profile/', {
-            headers: { 
-                'Authorization': 'Token ' + token,
-            }
-        })
-        .then(response => response.json())
-        .then((data) => {
-            console.log(data);
-            profileUpdate(data);
-        })
-        .catch(error => {
-            if (error.status == 400) {
-                for (const field in data.errors) {
-                    const errorField = document.getElementById(`${field}Error`);
-                    errorField.textContent = data.errors[field];
-                }
-            }
-            console.log('Error: ', error);
-        });
-    }
-    
+        console.log('Error: ', error);
+    });
+}
+
     //* ❤ //
