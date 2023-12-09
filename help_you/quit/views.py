@@ -93,7 +93,7 @@ class UsersChatsView(ListCreateAPIView):
 
 
     def create(self, request, *args, **kwargs):
-        user_id = request.data.get('id', None)
+        user_id = request.data.get('second_user_id', None)
         if not user_id:
             return Response(
                 {
