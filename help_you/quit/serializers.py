@@ -4,6 +4,7 @@ from datetime import datetime
 
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 from .models import Chat, BadHabits, Message
 
@@ -12,7 +13,7 @@ USER = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    date_joined = serializers.DateTimeField(default=datetime.now())
+    date_joined = serializers.DateTimeField(default=timezone.now())
 
     class Meta:
         model = USER
@@ -83,14 +84,24 @@ class ChangeUserSerializer(serializers.ModelSerializer):
         return instance
     
 
-class UsersChatsSerialiser(serializers.ModelSerializer):
+class UsersChatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
-        fields = ('username', 'chats')
+        fields = ('id', 'name', 'chats')
 
 
-class ChatsSerializer(serializers.ModelSerializer):
+class MessagesSerialiser(serializers.ModelSerializer):
+    departure_time = serializers.DateTimeField(default=timezone.now())
     class Meta:
-        model = Chat
-        fields = ('messages',)
+        model = Message
+        fields = '__all__'
+
+
+class LastMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ('departure_time', 'content')
+
+
+
         

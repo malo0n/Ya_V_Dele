@@ -14,6 +14,7 @@ class BadHabits(models.Model):
     
 
 class Message(models.Model):
+    chat = models.ForeignKey('Chat', null=True, on_delete=models.CASCADE, verbose_name="Чат", related_name="messages")
     sender = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name="Отправитель")
     content = models.TextField(verbose_name="Сообщение")
     departure_time = models.DateTimeField(auto_now_add=True, verbose_name="Время отправления")
@@ -24,7 +25,7 @@ class Message(models.Model):
     
 
 class Chat(models.Model):
-    messages = models.ManyToManyField('Message', blank=True, verbose_name="Сообщения")
+    second_user = models.ForeignKey('User', null=True, on_delete=models.CASCADE, verbose_name='Собеседник')
 
     class Meta:
         verbose_name = "Чат"
