@@ -31,6 +31,9 @@ class Chat(models.Model):
         verbose_name = "Чат"
         verbose_name_plural = "Чаты"
 
+    def __str__(self):
+        return f"{self.id}"
+
 
 class User(AbstractUser):
     gender_choice = [

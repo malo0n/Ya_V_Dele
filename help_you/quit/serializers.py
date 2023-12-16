@@ -90,6 +90,12 @@ class UsersChatsSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'chats')
 
 
+class CreateUsersChatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = USER
+        fields = ('id', 'name')
+
+
 class MessagesSerialiser(serializers.ModelSerializer):
     departure_time = serializers.DateTimeField(default=timezone.now())
     class Meta:

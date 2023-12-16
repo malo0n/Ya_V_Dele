@@ -60,34 +60,30 @@ class UsersChatsView(ListCreateAPIView):
     
 
     def get_queryset(self):
-        return Chat.objects.filter(user=self.request.user)
+        return self.request.user.chats.filter(user=self.request.user)
     
 
     def get(self, request, *args, **kwargs):
+        user = request.user
+        print(self.get_queryset())
         users_ids = list(self.get_queryset().values_list('second_user', flat=True))
+        print(users_ids)
         users = USER.objects.filter(id__in=users_ids)
         user_serializer = UsersChatsSerializer(users, many=True)
         for i in user_serializer.data:
             try:
                 chats_list = i.get('chats')
-                print(chats_list)
-                for j in chats_list:
-                    print(j)
-                    last_message = Chat.objects.get(
-                        id=j
-                        ).messages.latest('departure_time')
-                    print(last_message)
-                    message_serializer = LastMessageSerializer(last_message)
-                    time = message_serializer.data.get('departure_time').split('T')[1][:5]
-                    date, time = time[0], time[1]
-                    print(date, time)
-                    content = message_serializer.data.get('content')
-                    i.update({
-                        'time': time,
-                        'data': date,
-                        'last_message': content
-                    })
-            except:
+                chat_id = [chat.id for chat in user.chats.filter(id__in=chats_list)]
+                chat_id = ''.join(map(str, chat_id))
+                i.update({'chats': chat_id})
+                last_message = Chat.objects.get(
+                    id=chat_id
+                    ).messages.latest('departure_time')
+                message_serializer = LastMessageSerializer(last_message)
+                content = message_serializer.data.get('content')
+                i.update({'last_message': content})
+            except Exception as e:
+                print(e)
                 pass
         return Response(user_serializer.data, status=status.HTTP_200_OK)
 
@@ -119,33 +115,34 @@ class UsersChatsView(ListCreateAPIView):
         user.chats.add(chat)
         second_user.chats.add(chat)
         new_user = USER.objects.filter(id=user_id)
-        serializer = UsersChatsSerializer(new_user, many=True)
+        serializer = CreateUsersChatsSerializer(new_user, many=True)
+        [i.update({'chat_id': chat.id}) for i in serializer.data]
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class MessagesView(ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = MessagesSerialiser  
-    queryset = Message.objects.all()    
+# class MessagesView(ListCreateAPIView):
+#     permission_classes = (IsAuthenticated,)
+#     serializer_class = MessagesSerialiser  
+#     queryset = Message.objects.all()    
 
-    def get_object(self):
-        return USER.objects.get(auth_token=self.request.user.auth_token)
+#     def get_object(self):
+#         return USER.objects.get(auth_token=self.request.user.auth_token)
     
 
-    def get(self, request, *args, **kwargs):
-        messages = Message.objects.filter(chat=request.data.get('chat_id', None))
-        if not messages:
-            return Response({
-                'detail': 'There are no messages',
-            }, status=status.HTTP_404_NOT_FOUND)
-        serializer = MessagesSerialiser(messages, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#     def get(self, request, *args, **kwargs):
+#         messages = Message.objects.filter(chat=request.data.get('chat_id', None))
+#         if not messages:
+#             return Response({
+#                 'detail': 'There are no messages',
+#             }, status=status.HTTP_404_NOT_FOUND)
+#         serializer = MessagesSerialiser(messages, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
-    def post(self, request, *args, **kwargs):
-        chat = request.data.get('chat_id', None)
-        content = request.data.get('content', None)
-        sender = self.request.user.id
-        Message.objects.create(chat_id=chat, content=content, sender_id=sender)
-        return Response(status=status.HTTP_200_OK)
+#     def post(self, request, *args, **kwargs):
+#         chat = request.data.get('chat_id', None)
+#         content = request.data.get('content', None)
+#         sender = self.request.user.id
+#         Message.objects.create(chat_id=chat, content=content, sender_id=sender)
+#         return Response(status=status.HTTP_200_OK)
 

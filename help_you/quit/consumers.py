@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
+from channels.exceptions import DenyConnection
 from rest_framework.authtoken.models import Token
 
 from .models import Message
@@ -21,25 +22,42 @@ class ChatConsumer(AsyncWebsocketConsumer):
     
 
     async def connect(self):
-        headers = self.scope.get('headers')
-        for key, value in headers:
-            if key == b'authorization':
-                authorization_value = value
-        token = authorization_value.decode('utf-8').split()[-1]
-        self.user = await self.get_user_from_token(token)
+        try:
+            params = self.scope.get('query_string').decode('utf-8')
+            params_dict = {}
+            for key_value in params.split('&'):
+                params = key_value.split('=')
+                if len(params) == 2:
+                    key, value = params
+                    params_dict[key] = value
+                else:
+                    pass
+            # params_dict = dict(kv.split('=') for kv in params.split('&'))
+            self.chat = params_dict.get('chat_id', None)
+        except:
+            pass
+        try:
+            headers = self.scope.get('headers')
+            for key, value in headers:
+                if key == b'authorization':
+                    authorization_value = value
+            token = authorization_value.decode('utf-8').split()[-1]
+            self.user = await self.get_user_from_token(token)
+        except:
+            pass
         if self.user:
             await self.channel_layer.group_add(
-                f"chat_room_{self.user.id}",
+                f"chat_room_{self.chat}",
                 self.channel_name
             )
             await self.accept()
         else:
-            await self.close(code=400)
+            raise DenyConnection
 
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
-                f"chat_room_{self.user.id}",
+                f"chat_room_{self.chat}",
                 self.channel_name
             )
 
@@ -48,11 +66,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         content = text_data_json["content"]
         sender = self.user.id
-        self.chat = text_data_json["chat_id"]
         await self.sync_database_operation(content, sender)
         if self.user:
             await self.channel_layer.group_send(
-                f"chat_room_{self.user.id}",
+                f"chat_room_{self.chat}",
                 {
                     'type': 'chat.message',
                     'message': content
