@@ -109,5 +109,10 @@ class LastMessageSerializer(serializers.ModelSerializer):
         fields = ('departure_time', 'content')
 
 
+class AllUsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = USER
+        fields = ('name', 'id')
+
 
         

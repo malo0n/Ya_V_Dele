@@ -64,10 +64,14 @@ class UsersChatsView(ListCreateAPIView):
     
 
     def get(self, request, *args, **kwargs):
-        user = request.user
-        print(self.get_queryset())
-        users_ids = list(self.get_queryset().values_list('second_user', flat=True))
-        print(users_ids)
+        user = self.get_object()
+        chats_ids = [chat.id for chat in self.get_queryset()]
+        users_ids = list(
+            USER.objects.filter(chats__in=chats_ids).values_list('id', flat=True)
+            )
+        for i in users_ids:
+            if i == user.id:
+                users_ids.remove(i)
         users = USER.objects.filter(id__in=users_ids)
         user_serializer = UsersChatsSerializer(users, many=True)
         for i in user_serializer.data:
@@ -82,8 +86,7 @@ class UsersChatsView(ListCreateAPIView):
                 message_serializer = LastMessageSerializer(last_message)
                 content = message_serializer.data.get('content')
                 i.update({'last_message': content})
-            except Exception as e:
-                print(e)
+            except:
                 pass
         return Response(user_serializer.data, status=status.HTTP_200_OK)
 
@@ -118,31 +121,15 @@ class UsersChatsView(ListCreateAPIView):
         serializer = CreateUsersChatsSerializer(new_user, many=True)
         [i.update({'chat_id': chat.id}) for i in serializer.data]
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-# class MessagesView(ListCreateAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     serializer_class = MessagesSerialiser  
-#     queryset = Message.objects.all()    
-
-#     def get_object(self):
-#         return USER.objects.get(auth_token=self.request.user.auth_token)
     
 
-#     def get(self, request, *args, **kwargs):
-#         messages = Message.objects.filter(chat=request.data.get('chat_id', None))
-#         if not messages:
-#             return Response({
-#                 'detail': 'There are no messages',
-#             }, status=status.HTTP_404_NOT_FOUND)
-#         serializer = MessagesSerialiser(messages, many=True)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
+class AllUsersView(ListAPIView):
+    serializer_class = AllUsersSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get_object(self):
+        return USER.objects.get(auth_token=self.request.user.auth_token)
     
 
-#     def post(self, request, *args, **kwargs):
-#         chat = request.data.get('chat_id', None)
-#         content = request.data.get('content', None)
-#         sender = self.request.user.id
-#         Message.objects.create(chat_id=chat, content=content, sender_id=sender)
-#         return Response(status=status.HTTP_200_OK)
-
+    def get_queryset(self):
+        return USER.objects.exclude(id=self.get_object().id)

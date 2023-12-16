@@ -9,5 +9,6 @@ urlpatterns = [
     path('api/profile/', ChangeUserView.as_view()),
     path('api/login/', CustomAuthToken.as_view()),
     path('api/chats/', UsersChatsView.as_view()),
+    path('api/users/', AllUsersView.as_view())
 ]
 
