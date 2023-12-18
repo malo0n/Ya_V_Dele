@@ -87,20 +87,13 @@ class ChangeUserSerializer(serializers.ModelSerializer):
 class UsersChatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
-        fields = ('id', 'name', 'chats')
+        fields = ('id', 'name', 'chats', 'photo')
 
 
 class CreateUsersChatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
         fields = ('id', 'name')
-
-
-class MessagesSerialiser(serializers.ModelSerializer):
-    departure_time = serializers.DateTimeField(default=timezone.now())
-    class Meta:
-        model = Message
-        fields = '__all__'
 
 
 class LastMessageSerializer(serializers.ModelSerializer):
@@ -112,7 +105,7 @@ class LastMessageSerializer(serializers.ModelSerializer):
 class AllUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
-        fields = ('name', 'id')
+        fields = ('name', 'id', 'photo')
 
 
         
