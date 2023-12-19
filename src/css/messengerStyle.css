@@ -64,6 +64,14 @@
   color: var(--blue);
 }
 
+.disabled {
+  display: none;
+}
+
+.active {
+  display: flex;
+}
+
 header {
   margin: 30px 175px;
 }
@@ -197,6 +205,8 @@ header {
   height: 100%;
   display: flex;
   align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
   justify-content: start;
   flex-direction: column;
   padding: 5px;
@@ -226,6 +236,48 @@ header {
   flex-direction: column;
 }
 .main .main__chats .main__chats__body .main__chats__body__container .main__chats__body__container__title .main__chats__body__container__title_text {
+  font-size: 12px;
+  opacity: 0.5;
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.main .main__chats .main__chats__recommendations {
+  height: 100%;
+  display: none;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  justify-content: start;
+  flex-direction: column;
+  padding: 5px;
+}
+.main .main__chats .main__chats__recommendations .main__chats__recommendations__user {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 5px;
+  margin: 2px 0px;
+  width: 100%;
+  border-radius: 10px;
+}
+.main .main__chats .main__chats__recommendations .main__chats__recommendations__user:hover {
+  background-color: var(--input_bcg);
+  cursor: pointer;
+}
+.main .main__chats .main__chats__recommendations .main__chats__recommendations__user .main__chats__recommendations__user__avatar {
+  margin-right: 15px;
+}
+.main .main__chats .main__chats__recommendations .main__chats__recommendations__user .main__chats__recommendations__user__title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.main .main__chats .main__chats__recommendations .main__chats__recommendations__user .main__chats__recommendations__user__title .main__chats__recommendations__user__title_text {
   font-size: 12px;
   opacity: 0.5;
   width: 80%;

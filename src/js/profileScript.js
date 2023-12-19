@@ -1,7 +1,8 @@
 //* всё, что нам надо, сразу подгружаем //
-
+let indicator = false;
 let token = window.localStorage.getItem('token');
-window.onload = getHabits(), profileUserGet();
+window.onload = getHabits();
+
 
 //* ❤ //
 
@@ -12,9 +13,13 @@ let userAvatar = document.querySelector('.main__form__user-habits__avatar-field'
 let inputAvatar = document.querySelector('.main__form__user-habits__avatar_input');
 inputAvatar.addEventListener('change', () =>{
     userAvatar.src = URL.createObjectURL(inputAvatar.files[0]);
+    window.localStorage.setItem('avatar', userAvatar.src);
 })
-window.localStorage.setItem('avatar', userAvatar.src);
+console.log(window.localStorage.getItem('avatar'));
+
 //* ❤ //
+
+
 
 //* загрузка привычек
 
@@ -29,6 +34,7 @@ function addHabits(data){
     }
 }
 
+
 function getHabits() {
     fetch('http://127.0.0.1:8000/api/habits/', {
         headers: {
@@ -39,9 +45,11 @@ function getHabits() {
     .then((data) => {
         addHabits(data);
     })
+    .then(profileUserGet())
     .catch(error => {
         console.error('Error:', error);
     })
+    indicator = true;
 }
 
 //* ❤ //
@@ -86,11 +94,6 @@ function profileUserPost(event) {
         console.log(data);
     })
     .catch((error) => {
-        // for (const field in data.errors) {
-            //     const errorField = document.getElementById(`${field}Error`);
-            //     errorField.textContent = data.errors[field];
-            // }
-            // }?
             console.log(error);
         });
         return false;
@@ -116,7 +119,6 @@ function habitsUpdate(data){
         let habit_id = data.bad_habits[key].id;
         document.getElementById(habit_id).checked = true;
     }
-    console.log(data.bad_habits[0].id);
 }
 
 function profileUpdate(data){
@@ -149,7 +151,12 @@ function profileUserGet() {
             }
         }
         console.log('Error: ', error);
+        profileUserGet();
     });
 }
 
     //* ❤ //
+// if (indicator) {
+//     profileUserGet();
+// }
+// console.log(indicator);
